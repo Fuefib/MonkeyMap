@@ -22,7 +22,7 @@ html, body, #map-canvas {
 	// Definition du type de map
 	var aaTypeOptions = {
 		getTileUrl : function(coord, zoom) {
-			return '/public/images/tiles/tile_'+zoom+'_'+coord.x+'-'+coord.y+'.png'
+			return 'http://fuefib.free.fr/aa/tiles/tile_'+zoom+'_'+coord.x+'-'+coord.y+'.png'
 		},
 		tileSize: new google.maps.Size(256, 256),
 		maxZoom : 5,
