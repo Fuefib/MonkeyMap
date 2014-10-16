@@ -10,7 +10,7 @@ var myMap = {
 					var normCoord = myMap.getNormalizedCoord(coord, zoom);
 					
 					if (!normCoord) {
-	        			return 'http://fuefib.free.fr/aa/aaTiles/tile_3_4-0.png';
+	        			return 'http://fuefib.free.fr/aa/aaTiles/tile_5_0-0.png';
 	      			}
 	
 				return 'http://fuefib.free.fr/aa/aaTiles/tile_'+zoom+'_'+normCoord.x+'-'+normCoord.y+'.png'
