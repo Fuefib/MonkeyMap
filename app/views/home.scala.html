@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html ng-app="aaMap">
 <head>
 
@@ -7,13 +8,6 @@
 <meta charset="utf-8">
 
 <link href="/public/css/lib/bootstrap.min.css" rel="stylesheet">
-<style>
-html, body, #map-canvas {
-	height: 100%;
-	margin: 0px;
-	padding: 0px
-}
-</style>
 
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkojQe13bJyqKH4jCNX2reib_uCXVoM0">	
@@ -31,6 +25,8 @@ html, body, #map-canvas {
 </head>
 <body>
 	<div id="map-canvas"></div>
+
 	@views.html.blocks.markerForm()
+
 </body>
 </html>

@@ -8,8 +8,6 @@ scalacOptions in ThisBuild ++= Seq("-feature", "-language:reflectiveCalls")
 
 scalacOptions in (ThisBuild, Test) ++= Seq("-Yrangepos")
 
-javacOptions in ThisBuild ++= Seq("-source", "1.6", "-target", "1.6")
-
 publishMavenStyle in ThisBuild := true
 
 parallelExecution in (ThisBuild, Test) := true

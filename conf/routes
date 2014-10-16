@@ -5,6 +5,5 @@
 
 GET        /map			                controllers.WebController.main()
 
-
 # Map static resources from the /public folder to the /assets URL path
 GET        /public/*file				controllers.Assets.at(path="/public", file)
