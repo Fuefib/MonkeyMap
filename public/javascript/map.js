@@ -10,10 +10,10 @@ var myMap = {
 					var normCoord = myMap.getNormalizedCoord(coord, zoom);
 					
 					if (!normCoord) {
-	        			return null;
+	        			return 'http://fuefib.free.fr/aa/aaTiles/tile_3_4-0.png';
 	      			}
 	
-				return 'http://fuefib.free.fr/aa/tiles/tile_'+zoom+'_'+normCoord.x+'-'+normCoord.y+'.png'
+				return 'http://fuefib.free.fr/aa/aaTiles/tile_'+zoom+'_'+normCoord.x+'-'+normCoord.y+'.png'
 			},
 			tileSize: new google.maps.Size(256, 256),
 			maxZoom : 5,
