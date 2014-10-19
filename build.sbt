@@ -13,7 +13,7 @@ publishMavenStyle in ThisBuild := true
 parallelExecution in (ThisBuild, Test) := true
 
 libraryDependencies ++= Seq(
-  "org.reactivemongo" %% "play2-reactivemongo" % "0.10.2",
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.10.5.0.akka22",
   "org.slf4j" % "slf4j-api" % "1.7.5",
   "org.slf4j" % "jcl-over-slf4j" % "1.7.5",
   "org.slf4j" % "jul-to-slf4j" % "1.7.5")

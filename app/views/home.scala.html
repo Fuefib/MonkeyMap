@@ -18,15 +18,11 @@
 <script src='/public/javascript/lib/jquery-2.1.1.min.js'></script>
 
 <script src='/public/javascript/main.js'></script>
-<script src='/public/javascript/map.js'></script>
 
-<script>
-	google.maps.event.addDomListener(window, 'load', myMap.initialize);
-</script>
 </head>
-<body>
-	<div id="map-canvas"></div>
+<body ng-controller="MapController as mapCtrl">
 
+	<div id="map-canvas"></div>
 	@views.html.blocks.markerForm()
 
 </body>
