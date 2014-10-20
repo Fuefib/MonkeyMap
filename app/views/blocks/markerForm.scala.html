@@ -1,20 +1,19 @@
 <link href="/public/css/markerForm.css" rel="stylesheet">
 
-<div id="markerForm" class="panel panel-default" ng-controller="MarkerController as markCtrl">
+<div id="markerForm" class="panel panel-default">
 	<div class="panel-body">
 		<form role="form" class="form-horizontal">
 		  <div class="input-group input-group-sm">
 		  	<span class="input-group-addon">X</span>
-		    <input type="text" class="form-control" id="markerB" value="{{markCtrl.latLng.B}}" >
+		    <input type="text" class="form-control" id="markerB" value="{{mapCtrl.currentMarker.x}}" >
 		  </div>
 		  <div class="input-group input-group-sm">
 		  	<span class="input-group-addon">Y</span>
-		    <input type="text" class="form-control" id="markerK"  value="{{markCtrl.latLng.k}}" >
+		    <input type="text" class="form-control" id="markerK"  value="{{mapCtrl.currentMarker.y}}" >
 		  </div>
-
 		  <div class="input-group input-group-sm">
 		    <label for="description">Description</label>
-		    <input type="text" class="form-control" id="markerK" value="{{markCtrl.description}}">
+		    <input type="text" class="form-control" id="markerK" value="{{mapCtrl.currentMarker.description}}">
 		  </div>
 		  <br/>
 		  <button type="submit" class="btn btn-default">Submit</button>

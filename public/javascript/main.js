@@ -8,6 +8,8 @@
         this.latLng = {};
         this.description = "";
 
+        this.currentMarker = {};
+
         // Normalizes the coords that tiles repeat across the x axis (horizontally)
         // like the standard Google map tiles.
         a.getNormalizedCoord = function (coord, zoom) {
@@ -69,28 +71,29 @@
             aaMap.mapTypes.set('aa', a.aaMapType);
             aaMap.setMapTypeId('aa');
 
-            google.maps.event.addListener(aaMap, 'click', function(event) {
-                sc.$broadcast('mapClicked', event);
+
+            google.maps.event.addListener(aaMap, 'click', function(event) {             
                 console.log(sc);
+
+                sc.mapCtrl.currentMarker.x = event.latLng.B;
+                sc.mapCtrl.currentMarker.y = event.latLng.k;
+
+				sc.$apply();
+
+
+                console.log(sc.mapCtrl.currentMarker);
+
                 var marker = new google.maps.Marker({
                     position: event.latLng,
                     map: aaMap
                 });
-                console.log(event);
-            });
 
+                google.maps.event.addListener(marker, 'rightclick', function() {
+			    	alert("pouet");
+	            });
+        	});
         };
-
 
         this.initialize ();
     }]);
-
-	app.controller('MarkerController', ['$scope', function (sc) {
-
-
-        sc.$on('mapClicked', function (scope, event) {
-            scope.currentScope.markCtrl.setLatLng(event.latLng);
-            scope.currentScope.$apply();
-        });
-	}]);
 })();
