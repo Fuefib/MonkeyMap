@@ -18,7 +18,7 @@ object MarkerController extends Controller with MongoController {
 
 
   def getMarkers() = Action.async {
-    collection.find(Json.obj()).cursor[JsObject].collect[List]().map(markers => Json.arr(markers)).map(markers => Ok(markers))
+    collection.find(Json.obj()).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers)).map(markers => Ok(markers))
   }
 
   def putMarker() = Action.async(parse.json) { request =>

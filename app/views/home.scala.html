@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 
 <html ng-app="aaMap">
-<head>
+    <head>
 
-<title>Simple Map</title>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-<meta charset="utf-8">
+        <title>Simple Map</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
 
-<link href="/public/css/lib/bootstrap.min.css" rel="stylesheet">
-<link href="/public/css/map.css" rel="stylesheet">
+        <link href="/public/css/lib/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/css/map.css" rel="stylesheet">
 
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkojQe13bJyqKH4jCNX2reib_uCXVoM0">	
-</script>
+        <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGkojQe13bJyqKH4jCNX2reib_uCXVoM0">
+        </script>
 
-<script src='/public/javascript/lib/angular.min.js'></script>
-<script src='/public/javascript/lib/jquery-2.1.1.min.js'></script>
+        <script src='/public/javascript/lib/angular.min.js'></script>
+        <script src='/public/javascript/lib/jquery-2.1.1.min.js'></script>
 
-<script src='/public/javascript/map.js'></script>
-<script src='/public/javascript/main.js'></script>
+        <script src='/public/javascript/web.js'></script>
 
-</head>
-<body ng-controller="MapController as mapCtrl">
+        <script src='/public/javascript/marker.js'></script>
+        <script src='/public/javascript/map.js'></script>
+        <script src='/public/javascript/main.js'></script>
 
-	<div id="map-canvas"></div>
+    </head>
+    <body ng-controller="MapController as mapCtrl">
 
-	@views.html.blocks.markerForm()
+        <div id="map-canvas"></div>
 
-</body>
+        @views.html.blocks.markerForm()
+
+    </body>
 </html>

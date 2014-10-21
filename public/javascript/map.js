@@ -77,14 +77,7 @@ Map.prototype.initEvents = function (scope) {
 
 		scope.$apply();
 
-        var marker = new google.maps.Marker({
-            position: event.latLng,
-			map: aaMap.map
-		});
-
-		google.maps.event.addListener(marker, 'rightclick', function() {
-		   	marker.setMap(null);
-	    });
+        markerMgn.addMarker(aaMap.map, event.latLng.B, event.latLng.k, scope.mapCtrl.currentMarker.description);
      });
 }
 

@@ -5,5 +5,6 @@
         this.currentMarker = {};
         aaMap.initialize ();
         aaMap.initEvents (sc);
+        markerMgn.initMarkers(aaMap.map);
     }]);
 })();
