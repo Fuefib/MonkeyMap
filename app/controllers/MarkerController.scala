@@ -18,7 +18,7 @@ object MarkerController extends Controller with MongoController {
 
   // /markers
   def getMarkers() = Action.async(parse.empty) { request =>
-    val query = request.getQueryString("d").map( date => Json.obj("creationDate" -> Json.obj("$gt" -> date))).getOrElse(Json.obj());
+    val query = request.getQueryString("d").map( date => Json.obj("creationDate" -> Json.obj("$gt" -> date.toLong))).getOrElse(Json.obj());
     
     collection.find(query).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers)).map(markers => Ok(markers))
   }
