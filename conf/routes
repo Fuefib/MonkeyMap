@@ -8,6 +8,7 @@ GET        /map                 controllers.WebController.main()
 GET        /markers             controllers.MarkerController.getMarkers()
 
 POST       /marker              controllers.MarkerController.putMarker()
+DELETE     /marker              controllers.MarkerController.removeMarker()
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /public/*file        controllers.Assets.at(path="/public", file)

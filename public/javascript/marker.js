@@ -5,26 +5,41 @@ MarkerMng.prototype = {
     markers: []
 };
 
-MarkerMng.prototype.createMarker = function (map, x, y, description) {
+MarkerMng.prototype.roundCoord = function (B, k){
+    var nB = parseFloat(B.toPrecision(6));
+    var nk = parseFloat(k.toPrecision(6));
+
+    console.log({
+        "B" : nB,
+        "k" : nk
+    });
+
+    return {
+        "B" : nB,
+        "k" : nk
+    };
+};
+
+MarkerMng.prototype.createMarker = function (map, B, k, description) {
+    
     var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(y, x),
+        position: new google.maps.LatLng(k, B),
         map: map,
         title: description
+    });
+
+    google.maps.event.addListener(marker, 'rightclick', function () {
+        markerMgn.removeMarker(marker);
     });
 
     return marker;
 };
 
-MarkerMng.prototype.addMarker = function (map, x, y, description) {
+MarkerMng.prototype.addMarker = function (map, B, k, description) {
+    var coord = markerMgn.roundCoord(B,k);
+    var marker = markerMgn.createMarker(map, coord.B, coord.k, description);
 
-    var marker = markerMgn.createMarker(map, x, y, description);
-
-    google.maps.event.addListener(marker, 'rightclick', function () {
-        marker.setMap(null);
-    });
-
-
-    web.post(web.markerUrl, JSON.stringify({x: x, y: y, description: description}), function (data) {
+    web.post(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k, description: description}), function (data) {
         return true;
     });
     // var infowindow = new google.maps.InfoWindow();
@@ -32,8 +47,14 @@ MarkerMng.prototype.addMarker = function (map, x, y, description) {
 
 };
 
-MarkerMng.prototype.removeMarker = function (map, marker) {
+MarkerMng.prototype.removeMarker = function (marker) {
+     marker.setMap(null);
 
+     var coord = markerMgn.roundCoord(marker.position.B,marker.position.k);
+     web.delete(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k}), function (data) {
+        return true;
+    });
+     console.log(marker);
 };
 
 
@@ -62,7 +83,7 @@ MarkerMng.prototype.initMarkersCallback = function (map, result) {
     markerMgn.removeMarkers();
     for (var i = 0; i < result.length; i++) {
         var markerOptions = result[i];
-        var marker = markerMgn.createMarker(map, markerOptions.y, markerOptions.x, markerOptions.description);
+        var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description);
         markerMgn.markers.push(marker);
         console.log(result);
     }

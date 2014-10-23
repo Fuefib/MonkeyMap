@@ -16,13 +16,24 @@ object MarkerController extends Controller with MongoController {
 
   def collection: JSONCollection = db.collection[JSONCollection]("markers")
 
-
+  // /markers
   def getMarkers() = Action.async {
     collection.find(Json.obj()).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers)).map(markers => Ok(markers))
   }
 
+  def deleteMarkers() = Action.async {
+    collection.remove(Json.obj()).map(lastError => Ok("Mongo LastError: %s".format(lastError)))
+  }
+
+
+  // /marker
   def putMarker() = Action.async(parse.json) { request =>
     collection.insert(request.body).map(lastError =>
+      Ok("Mongo LastError: %s".format(lastError)))
+  }
+
+  def removeMarker() = Action.async(parse.json) { request =>
+	collection.remove(request.body).map(lastError =>
       Ok("Mongo LastError: %s".format(lastError)))
   }
 }
