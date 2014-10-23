@@ -5,6 +5,8 @@
         this.currentMarker = {};
         aaMap.initialize ();
         aaMap.initEvents (sc);
-        markerMgn.initMarkers(aaMap.map);
+        
+        setInterval( function () { markerMgn.initMarkers(aaMap.map); }, 10000);
+
     }]);
 })();

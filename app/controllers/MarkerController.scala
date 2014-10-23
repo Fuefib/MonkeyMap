@@ -17,8 +17,10 @@ object MarkerController extends Controller with MongoController {
   def collection: JSONCollection = db.collection[JSONCollection]("markers")
 
   // /markers
-  def getMarkers() = Action.async {
-    collection.find(Json.obj()).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers)).map(markers => Ok(markers))
+  def getMarkers() = Action.async(parse.empty) { request =>
+    val query = request.getQueryString("d").map( date => Json.obj("creationDate" -> Json.obj("$gt" -> date))).getOrElse(Json.obj());
+    
+    collection.find(query).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers)).map(markers => Ok(markers))
   }
 
   def deleteMarkers() = Action.async {

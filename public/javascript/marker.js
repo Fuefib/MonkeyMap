@@ -2,7 +2,8 @@ function MarkerMng() {
 };
 
 MarkerMng.prototype = {
-    markers: []
+    markers: [],
+    currentDataTime : 0
 };
 
 MarkerMng.prototype.roundCoord = function (B, k){
@@ -104,14 +105,25 @@ MarkerMng.prototype.removeMarkers = function () {
 
 MarkerMng.prototype.getMarkers = function (callback) {
     if (callback) {
-        web.get(web.markersUrl, callback);
+        var url = web.markersUrl;
+        if(markerMgn.currentDataTime){
+            url += '?d=' + markerMgn.currentDataTime;
+        }
+
+        markerMgn.currentDataTime = new Date().getTime();
+        web.get(url, callback);
+
     }
 };
 
 MarkerMng.prototype.initMarkers = function (map) {
-    markerMgn.getMarkers(function (data) {
-        markerMgn.initMarkersCallback(map, data);
-    });
+    try {
+        markerMgn.getMarkers(function (data) {
+            markerMgn.initMarkersCallback(map, data);
+        });
+    } catch (e) {
+        console.log('fsw : ' + e);
+    }
 };
 
 MarkerMng.prototype.initMarkersCallback = function (map, result) {
