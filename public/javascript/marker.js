@@ -117,13 +117,9 @@ MarkerMng.prototype.getMarkers = function (callback) {
 };
 
 MarkerMng.prototype.initMarkers = function (map) {
-    try {
-        markerMgn.getMarkers(function (data) {
-            markerMgn.initMarkersCallback(map, data);
-        });
-    } catch (e) {
-        console.log('fsw : ' + e);
-    }
+    markerMgn.getMarkers(function (data) {
+        markerMgn.initMarkersCallback(map, data);
+    });
 };
 
 MarkerMng.prototype.initMarkersCallback = function (map, result) {
@@ -135,5 +131,19 @@ MarkerMng.prototype.initMarkersCallback = function (map, result) {
     }
 };
 
+
+MarkerMng.prototype.updateMarkers = function (map) {  
+    markerMgn.getMarkers(function (data) {
+        markerMgn.updateMarkersCallback(map, data);
+    });
+};
+
+MarkerMng.prototype.updateMarkersCallback = function (map, result) {
+    for (var i = 0; i < result.length; i++) {
+        var markerOptions = result[i];
+        var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description, markerOptions.creationDate);
+        markerMgn.markers.push(marker);
+    }
+};
 
 var markerMgn = new MarkerMng();
