@@ -9,18 +9,47 @@ MarkerMng.prototype.roundCoord = function (B, k){
     var nB = parseFloat(B.toPrecision(6));
     var nk = parseFloat(k.toPrecision(6));
 
-    console.log({
-        "B" : nB,
-        "k" : nk
-    });
-
     return {
         "B" : nB,
         "k" : nk
     };
 };
 
-MarkerMng.prototype.createMarker = function (map, B, k, description) {
+MarkerMng.prototype.createInfoWindow = function (map, marker, content, creationDate) {
+
+    var contentString = "<div class=\"description\">";
+
+    if(content && content != ''){
+         contentString += content;
+     }
+
+     contentString += "</div>";
+        
+    if(creationDate){
+        var time = $.format.prettyDate(creationDate);
+        contentString += "<div class=\"creationdate\">created " + time + "</div>";
+    }
+    
+    if(contentString != ""){
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        google.maps.event.addListener(marker, 'mouseover', function () {
+            infowindow.open(map,marker);
+        });
+
+        google.maps.event.addListener(marker, 'mouseout', function () {
+            infowindow.close();
+        });     
+
+        return infowindow;   
+    }
+
+    return null;
+}
+
+MarkerMng.prototype.createMarker = function (map, B, k, description, creationDate) {
     
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(k, B),
@@ -28,23 +57,30 @@ MarkerMng.prototype.createMarker = function (map, B, k, description) {
         title: description
     });
 
+    var infowindow = markerMgn.createInfoWindow(map, marker, description, creationDate);
+
     google.maps.event.addListener(marker, 'rightclick', function () {
         markerMgn.removeMarker(marker);
     });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        map.panTo(marker.position);
+    });
+
+
 
     return marker;
 };
 
 MarkerMng.prototype.addMarker = function (map, B, k, description) {
     var coord = markerMgn.roundCoord(B,k);
-    var marker = markerMgn.createMarker(map, coord.B, coord.k, description);
+    var creationDate = new Date().getTime();
+    var marker = markerMgn.createMarker(map, coord.B, coord.k, description, creationDate);
+    
 
-    web.post(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k, description: description}), function (data) {
+    web.post(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k, description: description, creationDate: creationDate}), function (data) {
         return true;
     });
-    // var infowindow = new google.maps.InfoWindow();
-    //infowindow.setContent();
-
 };
 
 MarkerMng.prototype.removeMarker = function (marker) {
@@ -54,7 +90,6 @@ MarkerMng.prototype.removeMarker = function (marker) {
      web.delete(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k}), function (data) {
         return true;
     });
-     console.log(marker);
 };
 
 
@@ -83,9 +118,8 @@ MarkerMng.prototype.initMarkersCallback = function (map, result) {
     markerMgn.removeMarkers();
     for (var i = 0; i < result.length; i++) {
         var markerOptions = result[i];
-        var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description);
+        var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description, markerOptions.creationDate);
         markerMgn.markers.push(marker);
-        console.log(result);
     }
 };
 
