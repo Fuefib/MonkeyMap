@@ -76,8 +76,6 @@ MarkerMng.prototype.createMarker = function (map, B, k, description, creationDat
 MarkerMng.prototype.addMarker = function (map, B, k, description) {
     var coord = markerMgn.roundCoord(B,k);
     var creationDate = new Date().getTime();
-    var marker = markerMgn.createMarker(map, coord.B, coord.k, description, creationDate);
-    markerMgn.markers.push(marker);
 
     web.post(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k, description: description, creationDate: creationDate}), function (data) {
         return true;
