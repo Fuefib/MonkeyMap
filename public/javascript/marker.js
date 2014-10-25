@@ -68,8 +68,6 @@ MarkerMng.prototype.createMarker = function (map, B, k, description, creationDat
         map.panTo(marker.position);
     });
 
-
-
     return marker;
 };
 
