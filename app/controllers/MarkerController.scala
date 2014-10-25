@@ -1,26 +1,29 @@
 package controllers
 
-import play.api.libs.json.{Json, JsObject}
-import play.api.mvc.{Action, Controller}
-
+import play.api.Logger
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-
-import play.modules.reactivemongo.MongoController
+import play.api.libs.json.{JsValue, JsObject, Json}
+import play.api.mvc.Action
 import play.modules.reactivemongo.json.collection.JSONCollection
 
+object MarkerController extends JsonController {
 
-/**
- * Created by Jolin on 19/10/2014.
- */
-object MarkerController extends Controller with MongoController {
 
   def collection: JSONCollection = db.collection[JSONCollection]("markers")
 
   // /markers
   def getMarkers() = Action.async(parse.empty) { request =>
-    val query = request.getQueryString("d").map( date => Json.obj("creationDate" -> Json.obj("$gt" -> date.toLong))).getOrElse(Json.obj());
-    
-    collection.find(query).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers)).map(markers => Ok(markers))
+    val dateOption = request.getQueryString("d")
+    val queryCreated = dateOption.map( date => buildGreaterThanExistsQuery("creationDate", date.toLong)).getOrElse(Json.obj())
+    val queryRemoved = dateOption.map( date => buildGreaterThanExistsQuery("removeDate", date.toLong)).getOrElse(Json.obj("_id" -> -1))
+
+    Logger.debug(queryCreated.toString())
+    Logger.debug(queryRemoved.toString())
+
+    for(
+      created <- collection.find(queryCreated).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers));
+      removed <- collection.find(queryRemoved).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers))
+    ) yield Ok(Json.obj("created" -> created, "removed" -> removed))
   }
 
   def deleteMarkers() = Action.async {
@@ -35,7 +38,10 @@ object MarkerController extends Controller with MongoController {
   }
 
   def removeMarker() = Action.async(parse.json) { request =>
-	collection.remove(request.body).map(lastError =>
+    val selector = request.body \ "pos"
+    val update = Json.obj("$set" -> Json.obj("removeDate" -> request.body \ "removeDate"))
+
+    collection.update(selector, update).map(lastError =>
       Ok("Mongo LastError: %s".format(lastError)))
   }
 }

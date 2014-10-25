@@ -83,20 +83,22 @@ MarkerMng.prototype.addMarker = function (map, B, k, description) {
 };
 
 MarkerMng.prototype.removeMarker = function (marker) {
-     marker.setMap(null);
-
      var coord = markerMgn.roundCoord(marker.position.B,marker.position.k);
-     web.delete(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k}), function (data) {
+     var removeDate = new Date().getTime();
+     web.delete(web.markerUrl, JSON.stringify({pos: {B: coord.B, k: coord.k}, removeDate: removeDate}), function (data) {
         return true;
     });
 };
 
 
 MarkerMng.prototype.removeMarkers = function () {
-    for (var i = 0; i < markerMgn.markers.length; i++) {
-        var m = markerMgn.markers[i];
-        m.setMap(null);
-    }
+
+    $.each(markerMgn.markers, function (index,value) {
+        $.each(value, function (index, marker) {
+            marker.setMap(null);
+        });
+    });
+
     markerMgn.markers = [];
 };
 
@@ -122,10 +124,12 @@ MarkerMng.prototype.initMarkers = function (map) {
 
 MarkerMng.prototype.initMarkersCallback = function (map, result) {
     markerMgn.removeMarkers();
-    for (var i = 0; i < result.length; i++) {
-        var markerOptions = result[i];
+    var created = result.created;
+    for (var i = 0; i < created.length; i++) {
+        var markerOptions = created[i];
         var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description, markerOptions.creationDate);
-        markerMgn.markers.push(marker);
+        markerMgn.markers[markerOptions.B] = [];
+        markerMgn.markers[markerOptions.B][markerOptions.k] = marker;
     }
 };
 
@@ -137,10 +141,21 @@ MarkerMng.prototype.updateMarkers = function (map) {
 };
 
 MarkerMng.prototype.updateMarkersCallback = function (map, result) {
-    for (var i = 0; i < result.length; i++) {
-        var markerOptions = result[i];
+
+    var created = result["created"];
+    var removed = result["removed"];
+
+    for (var i = 0; i < created.length; i++) {
+        var markerOptions = created[i];
         var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description, markerOptions.creationDate);
-        markerMgn.markers.push(marker);
+        markerMgn.markers[markerOptions.B] = [];
+        markerMgn.markers[markerOptions.B][markerOptions.k] = marker;
+    }
+
+    for (var i = 0; i < removed.length; i++) {
+        var markerOptions = removed[i];
+        markerMgn.markers[markerOptions.B][markerOptions.k].setMap(null);
+        markerMgn.markers[markerOptions.B][markerOptions.k] = null;
     }
 };
 
