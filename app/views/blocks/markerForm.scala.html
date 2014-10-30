@@ -1,23 +1,78 @@
 <link href="/public/css/markerForm.css" rel="stylesheet">
 
+ <script>
+	$(function() {
+		$( "#markerForm" ).draggable();
+	});
+</script>
+
 <div id="markerForm" class="panel panel-default">
 	<div class="panel-body">
-		<form role="form" class="form-horizontal" ng-submit="mapCtrl.submitMarker()">
-		  <div class="input-group input-group-sm">
-		  	<span class="input-group-addon">X</span>
-		    <input type="text" class="form-control" id="markerB" ng-model="mapCtrl.currentMarker.x" value="{{mapCtrl.currentMarker.x}}" disabled="true">
-		  </div>
-		  <div class="input-group input-group-sm">
-		  	<span class="input-group-addon">Y</span>
-		    <input type="text" class="form-control" id="markerK" ng-model="mapCtrl.currentMarker.y" value="{{mapCtrl.currentMarker.y}}" disabled="true">
-		  </div>
+		<form role="form" class="form-horizontal">
+			<fieldset>
 
-		  <div class="input-group input-group-sm">
-		    <label for="description">Description</label>
-		    <input type="text" class="form-control" id="markDescription" ng-model="mapCtrl.currentMarker.description" value="{{mapCtrl.currentMarker.description}}">
-		  </div>
-		  <br/>
-		  <button type="submit" class="btn btn-default">Créer</button>
-		</form>	
+				<legend>Monkey Map</legend>
+
+				<div class="form-group">
+					<div class="">
+						<div class="input-group">
+							<span class="input-group-addon">X</span> <input id="markerB"
+								name="markerB" class="form-control" placeholder="0.0"
+								required="" type="text" ng-model="mapCtrl.currentMarker.x"
+								value="{{mapCtrl.currentMarker.x}}" disabled="true">
+						</div>
+
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="">
+						<div class="input-group">
+							<span class="input-group-addon">Y</span> <input id="markerK"
+								name="markerK" class="form-control" placeholder="0.0"
+								required="" type="text" ng-model="mapCtrl.currentMarker.y"
+								value="{{mapCtrl.currentMarker.y}}" disabled="true">
+						</div>
+
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="">
+						<textarea class="form-control" id="Description" name="Description"
+							placeholder="description"
+							ng-model="mapCtrl.currentMarker.description"
+							value="{{mapCtrl.currentMarker.description}}"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group" style="text-align: center;">
+					<div class="">
+						<label class="radio-inline" for="type-0" > 
+							<input name="type" id="type-0" value="bleu" type="radio" ng-model="mapCtrl.currentMarker.type" checked="checked">
+							<img alt="bleue" src="/public/images/fleche_bleue.png">
+						</label> <label class="radio-inline" for="type-1"> 
+							<input name="type" id="type-1" value="rouge" type="radio" ng-model="mapCtrl.currentMarker.type">
+							<img alt="rouge" src="/public/images/fleche_rouge.png">
+						</label> <label class="radio-inline" for="type-2"> 
+							<input name="type" id="type-2" value="rose" type="radio" ng-model="mapCtrl.currentMarker.type">
+							<img alt="rose" src="/public/images/fleche_rose.png">
+						</label> <label class="radio-inline" for="type-3"> 
+							<input name="type" id="type-3" value="vert" type="radio" ng-model="mapCtrl.currentMarker.type">
+							<img alt="verte" src="/public/images/fleche_verte.png">
+						</label>
+					</div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<div class="" style="text-align: center;" >
+					<button type="submit" id="" name="" class="btn btn-primary">Créer</button>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+
 	</div>
 </div>

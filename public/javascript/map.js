@@ -77,7 +77,9 @@ Map.prototype.initEvents = function (scope) {
 
 		scope.$apply();
 
-        markerMgn.addMarker(aaMap.map, event.latLng.B, event.latLng.k, scope.mapCtrl.currentMarker.description);
+		console.log("type : " + scope.mapCtrl.currentMarker.type);
+
+        markerMgn.addMarker(aaMap.map, event.latLng.B, event.latLng.k, scope.mapCtrl.currentMarker.description, scope.mapCtrl.markerTypes[scope.mapCtrl.currentMarker.type]);
      });
 }
 

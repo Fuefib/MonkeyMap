@@ -1,6 +1,7 @@
 function MarkerMng() {
 };
 
+
 MarkerMng.prototype = {
     markers: [],
     currentDataTime : 0
@@ -50,15 +51,20 @@ MarkerMng.prototype.createInfoWindow = function (map, marker, content, creationD
     return null;
 }
 
-MarkerMng.prototype.createMarker = function (map, B, k, description, creationDate) {
+MarkerMng.prototype.createMarker = function (map, markerOptions) {
     
     var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(k, B),
+        position: new google.maps.LatLng(markerOptions.k, markerOptions.B),
         map: map,
-        title: description
+        title: markerOptions.description
     });
 
-    var infowindow = markerMgn.createInfoWindow(map, marker, description, creationDate);
+    if(markerOptions.type){
+        var icon = "/public/images/" + markerOptions.type.image;
+        marker.setIcon(icon);
+    }
+
+    var infowindow = markerMgn.createInfoWindow(map, marker, markerOptions.description, markerOptions.creationDate);
 
     google.maps.event.addListener(marker, 'rightclick', function () {
         markerMgn.removeMarker(marker);
@@ -71,11 +77,11 @@ MarkerMng.prototype.createMarker = function (map, B, k, description, creationDat
     return marker;
 };
 
-MarkerMng.prototype.addMarker = function (map, B, k, description) {
+MarkerMng.prototype.addMarker = function (map, B, k, description, type) {
     var coord = markerMgn.roundCoord(B,k);
     var creationDate = new Date().getTime();
 
-    web.post(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k, description: description, creationDate: creationDate}), function (data) {
+    web.post(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k, description: description, creationDate: creationDate, type: type}), function (data) {
         return true;
     });
 };
@@ -125,7 +131,7 @@ MarkerMng.prototype.initMarkersCallback = function (map, result) {
     var created = result.created;
     for (var i = 0; i < created.length; i++) {
         var markerOptions = created[i];
-        var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description, markerOptions.creationDate);
+        var marker = markerMgn.createMarker(map, markerOptions);
         markerMgn.markers[markerOptions.B] = [];
         markerMgn.markers[markerOptions.B][markerOptions.k] = marker;
     }
@@ -145,7 +151,7 @@ MarkerMng.prototype.updateMarkersCallback = function (map, result) {
 
     for (var i = 0; i < created.length; i++) {
         var markerOptions = created[i];
-        var marker = markerMgn.createMarker(map, markerOptions.B, markerOptions.k, markerOptions.description, markerOptions.creationDate);
+        var marker = markerMgn.createMarker(map, markerOptions);
         markerMgn.markers[markerOptions.B] = [];
         markerMgn.markers[markerOptions.B][markerOptions.k] = marker;
     }
