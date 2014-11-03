@@ -1,4 +1,4 @@
-name := "aamap"
+name := "aamapa"
 
 version := "1.0-SNAPSHOT"
 
