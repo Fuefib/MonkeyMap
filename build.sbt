@@ -1,4 +1,4 @@
-name := "aamapa"
+name := "Monkey Map"
 
 version := "1.0-SNAPSHOT"
 

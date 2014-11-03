@@ -28,7 +28,7 @@ MarkerMng.prototype.createInfoWindow = function (map, marker, content, creationD
      contentString += "</div>";
         
     if(creationDate){
-        var time = $.format.prettyDate(creationDate);
+        var time = $.format.date(creationDate, "dd/MM HH:mm:ss");
         contentString += "<div class=\"creationdate\">created " + time + "</div>";
     }
     

@@ -5,7 +5,7 @@ html, body, #map-canvas {
 }
 
 .description {
-	min-width: 100px;
+	min-width: 150px;
 	min-height: 50px;
 	font-size: 16px;
 	text-align: center;

@@ -47,29 +47,57 @@
 				</div>
 
 				<div class="form-group" style="text-align: center;">
-					<div class="">
-						<label class="radio-inline" for="type-0" > 
-							<input name="type" id="type-0" value="bleu" type="radio" ng-model="mapCtrl.currentMarker.type" checked="checked">
-							<img alt="bleue" src="/public/images/fleche_bleue.png">
-						</label> <label class="radio-inline" for="type-1"> 
-							<input name="type" id="type-1" value="rouge" type="radio" ng-model="mapCtrl.currentMarker.type">
-							<img alt="rouge" src="/public/images/fleche_rouge.png">
-						</label> <label class="radio-inline" for="type-2"> 
-							<input name="type" id="type-2" value="rose" type="radio" ng-model="mapCtrl.currentMarker.type">
-							<img alt="rose" src="/public/images/fleche_rose.png">
-						</label> <label class="radio-inline" for="type-3"> 
-							<input name="type" id="type-3" value="vert" type="radio" ng-model="mapCtrl.currentMarker.type">
-							<img alt="verte" src="/public/images/fleche_verte.png">
-						</label>
-					</div>
+                    <table class="text-center">
+					    <tr>
+                            <td class="text-left"><h6><strong>Infos :</strong></h6></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="" for="type-0" ><img alt="bleue" src="/public/images/fleche_bleue.png"></label>
+                                <br/>
+                                <input name="type" id="type-0" value="bleu" type="radio" ng-model="mapCtrl.currentMarker.type">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left"><h6><strong>Ennemis :</strong></h6></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="" for="type-1"><img alt="rouge" src="/public/images/fleche_rouge.png"></label>
+                                <br/>
+                                <input name="type" id="type-1" value="rouge" type="radio" ng-model="mapCtrl.currentMarker.type">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left"><h6><strong>Alliés :</strong></h6></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="" for="type-2"><img alt="rose" src="/public/images/fleche_rose.png"></label>
+                                <br/>
+                                <input name="type" id="type-2" value="rose" type="radio" ng-model="mapCtrl.currentMarker.type">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left"><h6><strong>Fermes sauvages :</strong></h6></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="" for="type-3">
+                                <img alt="verte" src="/public/images/fleche_verte.png"></label>
+                                <br/>
+                                <input name="type" id="type-3" value="vert" type="radio" ng-model="mapCtrl.currentMarker.type">
+                            </td>
+					    </tr>
+                    </table>
 				</div>
 
 				<!-- Button -->
-				<div class="form-group">
-					<div class="" style="text-align: center;" >
-					<button type="submit" id="" name="" class="btn btn-primary">Créer</button>
-					</div>
-				</div>
+				@*<div class="form-group">*@
+					@*<div class="" style="text-align: center;" >*@
+					@*<button type="submit" id="" name="" class="btn btn-primary">Créer</button>*@
+					@*</div>*@
+				@*</div>*@
 
 			</fieldset>
 		</form>

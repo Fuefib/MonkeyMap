@@ -21,9 +21,6 @@ object MarkerController extends JsonController {
     ).getOrElse(Json.obj("removeDate" -> Json.obj("$exists" -> false) ))
     val queryRemoved = dateOption.map( date => buildGreaterThanExistsQuery("removeDate", date.toLong)).getOrElse(Json.obj("_id" -> -1))
 
-    Logger.debug(queryCreated.toString())
-
-
     for(
       created <- collection.find(queryCreated).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers));
       removed <- collection.find(queryRemoved).cursor[JsObject].collect[List]().map(markers => Json.toJson(markers))

@@ -11,6 +11,10 @@
         	"rose": {name:"rose", image:"fleche_rose.png"}
     	};
 
+        this.resetMarker = function () {
+          this.currentMarker = {};
+        };
+
         aaMap.initialize ();
         aaMap.initEvents (sc);
         markerMgn.initMarkers(aaMap.map);
