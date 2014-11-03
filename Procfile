@@ -1,0 +1,1 @@
+web: target/universal/stage/bin/aamapa -Dhttp.port=$PORT
