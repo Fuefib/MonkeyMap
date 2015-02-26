@@ -7,12 +7,12 @@ MarkerMng.prototype = {
     currentDataTime : 0
 };
 
-MarkerMng.prototype.roundCoord = function (B, k){
-    var nB = parseFloat(B.toPrecision(6));
+MarkerMng.prototype.roundCoord = function (D, k){
+    var nD = parseFloat(D.toPrecision(6));
     var nk = parseFloat(k.toPrecision(6));
 
     return {
-        "B" : nB,
+        "D" : nD,
         "k" : nk
     };
 };
@@ -54,7 +54,7 @@ MarkerMng.prototype.createInfoWindow = function (map, marker, content, creationD
 MarkerMng.prototype.createMarker = function (map, markerOptions) {
     
     var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(markerOptions.k, markerOptions.B),
+        position: new google.maps.LatLng(markerOptions.k, markerOptions.D),
         map: map,
         title: markerOptions.description
     });
@@ -77,19 +77,19 @@ MarkerMng.prototype.createMarker = function (map, markerOptions) {
     return marker;
 };
 
-MarkerMng.prototype.addMarker = function (map, B, k, description, type) {
-    var coord = markerMgn.roundCoord(B,k);
+MarkerMng.prototype.addMarker = function (map, D, k, description, type) {
+    var coord = markerMgn.roundCoord(D,k);
     var creationDate = new Date().getTime();
 
-    web.post(web.markerUrl, JSON.stringify({B: coord.B, k: coord.k, description: description, creationDate: creationDate, type: type}), function (data) {
+    web.post(web.markerUrl, JSON.stringify({D: coord.D, k: coord.k, description: description, creationDate: creationDate, type: type}), function (data) {
         return true;
     });
 };
 
 MarkerMng.prototype.removeMarker = function (marker) {
-     var coord = markerMgn.roundCoord(marker.position.B,marker.position.k);
+     var coord = markerMgn.roundCoord(marker.position.D,marker.position.k);
      var removeDate = new Date().getTime();
-     web.delete(web.markerUrl, JSON.stringify({pos: {B: coord.B, k: coord.k}, removeDate: removeDate}), function (data) {
+     web.delete(web.markerUrl, JSON.stringify({pos: {D: coord.D, k: coord.k}, removeDate: removeDate}), function (data) {
         return true;
     });
 };
@@ -132,8 +132,8 @@ MarkerMng.prototype.initMarkersCallback = function (map, result) {
     for (var i = 0; i < created.length; i++) {
         var markerOptions = created[i];
         var marker = markerMgn.createMarker(map, markerOptions);
-        markerMgn.markers[markerOptions.B] = [];
-        markerMgn.markers[markerOptions.B][markerOptions.k] = marker;
+        markerMgn.markers[markerOptions.D] = [];
+        markerMgn.markers[markerOptions.D][markerOptions.k] = marker;
     }
 };
 
@@ -152,14 +152,14 @@ MarkerMng.prototype.updateMarkersCallback = function (map, result) {
     for (var i = 0; i < created.length; i++) {
         var markerOptions = created[i];
         var marker = markerMgn.createMarker(map, markerOptions);
-        markerMgn.markers[markerOptions.B] = [];
-        markerMgn.markers[markerOptions.B][markerOptions.k] = marker;
+        markerMgn.markers[markerOptions.D] = [];
+        markerMgn.markers[markerOptions.D][markerOptions.k] = marker;
     }
 
     for (var i = 0; i < removed.length; i++) {
         var markerOptions = removed[i];
-        markerMgn.markers[markerOptions.B][markerOptions.k].setMap(null);
-        markerMgn.markers[markerOptions.B][markerOptions.k] = null;
+        markerMgn.markers[markerOptions.D][markerOptions.k].setMap(null);
+        markerMgn.markers[markerOptions.D][markerOptions.k] = null;
     }
 };
 

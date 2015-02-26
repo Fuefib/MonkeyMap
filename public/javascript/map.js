@@ -72,14 +72,14 @@ Map.prototype.initialize = function () {
 Map.prototype.initEvents = function (scope) {
 	google.maps.event.addListener(aaMap.map, 'click', function(event) {             
 
-        scope.mapCtrl.currentMarker.x = event.latLng.B;
+        scope.mapCtrl.currentMarker.x = event.latLng.D;
         scope.mapCtrl.currentMarker.y = event.latLng.k;
 
 		scope.$apply();
 
 		console.log("type : " + scope.mapCtrl.currentMarker.type);
 
-        markerMgn.addMarker(aaMap.map, event.latLng.B, event.latLng.k, scope.mapCtrl.currentMarker.description, scope.mapCtrl.markerTypes[scope.mapCtrl.currentMarker.type]);
+        markerMgn.addMarker(aaMap.map, event.latLng.D, event.latLng.k, scope.mapCtrl.currentMarker.description, scope.mapCtrl.markerTypes[scope.mapCtrl.currentMarker.type]);
         scope.mapCtrl.resetMarker();
         scope.$apply();
      });
